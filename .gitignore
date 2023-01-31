@@ -5,4 +5,4 @@
 .LSOverride
 
 # Configurations
-appconfig.php
+public/appconfig.php
