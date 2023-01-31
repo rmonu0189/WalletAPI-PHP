@@ -1,0 +1,5 @@
+{
+  "auth_class" : "Application\\Model\\User",
+  "validity" : 30,
+  "single_device_lock" : 1
+}

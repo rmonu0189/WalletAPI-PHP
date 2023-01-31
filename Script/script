@@ -1,0 +1,34 @@
+#!/usr/bin/php
+
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Include required files.
+|--------------------------------------------------------------------------
+|
+| Include all required files like as MRPrint and MRCmmand.
+|
+*/
+require __DIR__."/../public/appconfig.php";
+require __DIR__."/../MRPHPSDK/MRTerminal/MRCommand.php";
+require __DIR__."/../MRPHPSDK/MRTerminal/MRPrint.php";
+require __DIR__."/../MRPHPSDK/MRTerminal/MRTerminalDatabase.php";
+require __DIR__."/../MRPHPSDK/MRTerminal/MRTemplate.php";
+
+/*
+|--------------------------------------------------------------------------
+| Handle terminal commands
+|--------------------------------------------------------------------------
+|
+| MRCommand class handle all arguments provided from terminal.
+|
+*/
+
+$command = new \MRPHPSDK\MRTerminal\MRCommand();
+try{
+    $command->handle($argv);
+}
+catch (\Exception $e){
+    \MRPHPSDK\MRTerminal\MRPrint::error($e->getMessage());
+}
