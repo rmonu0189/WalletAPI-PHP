@@ -47,7 +47,7 @@ class AuthService {
         if($user) {
             unset($user->password);
             $accessToken = MRAccessToken::generate($user->id, ["email"=>$user->email, "mobile"=>$user->mobile], "MOBILE");
-            header('token: '. $accessToken);
+            $user->accessToken = $accessToken;
             return Response::data($user, 1, "Success");
         } else {
             return Response::data(null, 0, "Email or password incorrect.");
