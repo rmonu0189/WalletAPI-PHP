@@ -12,7 +12,7 @@ class Response extends MRModel{
     public $data;
 
     function __construct($params = array()){
-        $this->status = 0;
+        $this->status = false;
         $this->message = "Something went wrong";
         parent::__construct($params);
     }
@@ -28,7 +28,7 @@ class Response extends MRModel{
 
     public static function toObject($message, $status=0, $data=[]) {
         $result = new Response();
-        $result->status = $status;
+        $result->status = $status === 0 ? false : true;
         $result->message = $message;
         $data["response"] = ($status == 1) ? "success" : "failed";
         $result->data = $data;
@@ -37,7 +37,7 @@ class Response extends MRModel{
 
     public static function toJson($data, $status = 1, $message = ""){
         $data["response"] = ($status == 1) ? "success" : "failed";
-        return json_encode(["data" => $data, "status" => $status, "message" => $message]);
+        return json_encode(["data" => $data, "status" => $status === 0 ? false : true, "message" => $message]);
     }
 
     public static function json($object){
