@@ -13,12 +13,11 @@ class AuthService {
         $validation = new MRValidation($user, [
             'name' => 'required',
             'email' => 'required|unique:User',
-            'mobile'=>   'required|digits:10'
+            'password' => 'required'
         ], [
             'name.required' => 'Please enter a valid name',
             'email.unique' => 'Email is already registered',
-            'mobile.required' => 'Mobile number can not be blank',
-            'mobile.digits'   => 'Invalid mobile number'
+            'password.required' => 'Please enter password'
         ]);
 
         if($validation->validateFailed()){

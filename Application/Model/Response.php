@@ -18,11 +18,10 @@ class Response extends MRModel{
     }
 
     public static function data($data, $status = 1, $message = "" ){
-        header("Content-type:application/json");
         if($data) {
             return ["data" => $data, "status"=>$status == 0 ? false : true, "message"=>$message];
         } else {
-            return ["status"=>$status == 0 ? false : true, "message"=>$message];
+            return ["data" => ["status" => "success"], "status"=>$status == 0 ? false : true, "message"=>$message];
         }
     }
 
