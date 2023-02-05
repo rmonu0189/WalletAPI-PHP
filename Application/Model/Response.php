@@ -20,15 +20,15 @@ class Response extends MRModel{
     public static function data($data, $status = 1, $message = "" ){
         header("Content-type:application/json");
         if($data) {
-            return ["data" => $data, "status"=>$status, "message"=>$message];
+            return ["data" => $data, "status"=>$status == 0 ? false : true, "message"=>$message];
         } else {
-            return ["status"=>$status, "message"=>$message];
+            return ["status"=>$status == 0 ? false : true, "message"=>$message];
         }
     }
 
     public static function toObject($message, $status=0, $data=[]) {
         $result = new Response();
-        $result->status = $status === 0 ? false : true;
+        $result->status = $status == 0 ? false : true;
         $result->message = $message;
         $data["response"] = ($status == 1) ? "success" : "failed";
         $result->data = $data;
@@ -37,7 +37,7 @@ class Response extends MRModel{
 
     public static function toJson($data, $status = 1, $message = ""){
         $data["response"] = ($status == 1) ? "success" : "failed";
-        return json_encode(["data" => $data, "status" => $status === 0 ? false : true, "message" => $message]);
+        return json_encode(["data" => $data, "status" => $status == 0 ? false : true, "message" => $message]);
     }
 
     public static function json($object){
