@@ -16,6 +16,7 @@ class MRDatabase{
         try {
             $this->connection = new PDO("mysql:host=".MRConfig::get('database')['hostname'].";dbname=".MRConfig::get('database')['databaseName'], MRConfig::get('database')['userName'], MRConfig::get('database')['password']);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch(\Exception $e) {
             throw new \Exception($e->getMessage());
         }
