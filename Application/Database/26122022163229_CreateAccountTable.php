@@ -9,6 +9,7 @@ class CreateAccountTable extends MRMigration{
 		MRMigration::create('Account', function(DBSchema $schema){
             $schema->bigIncrement('id');
             $schema->bigInteger("userId");
+            $schema->bigInteger("linkedBankId")->defaults(0);
             $schema->string("type");
             $schema->double("balance");
 			$schema->string("bankName");

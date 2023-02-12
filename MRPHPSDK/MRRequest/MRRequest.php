@@ -61,9 +61,6 @@ class MRRequest{
         }
     }
 
-
-
-
     private function mergeAllRequest(){
         $this->data = array();
         $this->data = array_merge($this->get, $this->post);

@@ -47,6 +47,7 @@ class AccountService {
             $account->type = $params['type'];
             $account->bankName = $params['bankName'];
             $account->accountNumber = $params['accountNumber'];
+            $account->linkedBankId = $params['linkedBankId'];
             $account->save();
             return Response::data(null, 1, "Account successfully update.");
         } else {
