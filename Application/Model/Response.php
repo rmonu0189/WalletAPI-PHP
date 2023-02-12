@@ -21,7 +21,7 @@ class Response extends MRModel{
         if($data) {
             return ["data" => $data, "status"=>$status == 0 ? false : true, "message"=>$message];
         } else {
-            return ["data" => ["status" => "success"], "status"=>$status == 0 ? false : true, "message"=>$message];
+            return ["data" => ["status" => $status], "status"=>$status == 0 ? false : true, "message"=>$message];
         }
     }
 

@@ -11,7 +11,8 @@ class CreateAccountTable extends MRMigration{
             $schema->bigInteger("userId");
             $schema->string("type");
             $schema->double("balance");
-			$schema->string("info");
+			$schema->string("bankName");
+            $schema->string("accountNumber");
             $schema->dateTime("createdAt")->defaultCurrentTimeStamp();
             $schema->dateTime("updatedAt")->defaultCurrentTimeStamp();
         });
