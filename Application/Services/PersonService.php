@@ -15,7 +15,6 @@ class PersonService {
     public static function addNewPerson($params, $userId) {
         $validation = new MRValidation($params, [
             'name' => 'required',
-            'balance' => 'required',
             'mobile' => 'required',
             'initialBalance' => 'required'
         ], []);
@@ -25,6 +24,7 @@ class PersonService {
         }
 
         $params['userId'] = $userId;
+        $params['balance'] = $params['initialBalance'];
         $person = new Person($params);
         $person->save();
         return Response::data(null, 1, "Person added successfully.");
@@ -35,7 +35,6 @@ class PersonService {
             'id' => 'required',
             'name' => 'required',
             'mobile' => 'required',
-            'balance' => 'required',
             'initialBalance' => 'required'
         ], []);
 
@@ -46,9 +45,9 @@ class PersonService {
         $person = Person::where('id', $params['id'])->where('userId', $userId)->first();
         if($person) {
             $person->name = $params['name'];
-            $person->balance = $params['balance'];
             $person->mobile = $params['mobile'];
             $person->initialBalance = $params['initialBalance'];
+            $account->updatedAt = date('yyyy-MM-dd HH:mm:ss');
             $person->save();
             return Response::data(null, 1, "Person successfully update.");
         } else {

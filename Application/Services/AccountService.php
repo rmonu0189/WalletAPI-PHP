@@ -24,6 +24,7 @@ class AccountService {
         }
 
         $params['userId'] = $userId;
+        $params['balance'] = $params['initialBalance'];
         $account = new Account($params);
         $account->save();
         return Response::data(null, 1, "Account added successfully.");
@@ -47,7 +48,8 @@ class AccountService {
             $account->bankName = $params['bankName'];
             $account->accountNumber = $params['accountNumber'];
             $account->linkedBankId = $params['linkedBankId'];
-            $account->updatedAt = 
+            $account->initialBalance = $params['initialBalance'];
+            $account->updatedAt = date('yyyy-MM-dd HH:mm:ss');
             $account->save();
             return Response::data(null, 1, "Account successfully update.");
         } else {
