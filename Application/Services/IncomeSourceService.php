@@ -43,7 +43,6 @@ class IncomeSourceService {
         $model = IncomeSource::where('id', $params['id'])->where('userId', $userId)->first();
         if($model) {
             $model->name = $params['name'];
-            $model->balance = $params['balance'];
             $model->initialBalance = $params['initialBalance'];
             $model->updatedAt = date('Y-m-d H:i:s');
             $model->save();
