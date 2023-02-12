@@ -16,6 +16,7 @@ class PersonService {
         $validation = new MRValidation($params, [
             'name' => 'required',
             'balance' => 'required',
+            'mobile' => 'required',
             'initialBalance' => 'required'
         ], []);
 
@@ -33,6 +34,7 @@ class PersonService {
         $validation = new MRValidation($params, [
             'id' => 'required',
             'name' => 'required',
+            'mobile' => 'required',
             'balance' => 'required',
             'initialBalance' => 'required'
         ], []);
@@ -45,6 +47,7 @@ class PersonService {
         if($person) {
             $person->name = $params['name'];
             $person->balance = $params['balance'];
+            $person->mobile = $params['mobile'];
             $person->initialBalance = $params['initialBalance'];
             $person->save();
             return Response::data(null, 1, "Person successfully update.");

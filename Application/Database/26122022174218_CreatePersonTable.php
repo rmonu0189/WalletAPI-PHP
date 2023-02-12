@@ -10,6 +10,7 @@ class CreatePersonTable extends MRMigration{
             $schema->bigIncrement('id');
             $schema->bigInteger("userId");
 			$schema->string("name");
+            $schema->string("mobile");
             $schema->double("balance");
 			$schema->double("initialBalance");
             $schema->dateTime("createdAt")->defaultCurrentTimeStamp();
