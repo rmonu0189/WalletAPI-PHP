@@ -47,7 +47,7 @@ class PersonService {
             $person->name = $params['name'];
             $person->mobile = $params['mobile'];
             $person->initialBalance = $params['initialBalance'];
-            $person->updatedAt = date('yyyy-MM-dd HH:mm:ss');
+            $person->updatedAt = date('Y-m-d H:i:s');
             $person->save();
             return Response::data(null, 1, "Person successfully update.");
         } else {

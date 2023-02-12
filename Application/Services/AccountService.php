@@ -49,7 +49,7 @@ class AccountService {
             $account->accountNumber = $params['accountNumber'];
             $account->linkedBankId = $params['linkedBankId'];
             $account->initialBalance = $params['initialBalance'];
-            $account->updatedAt = date('yyyy-MM-dd HH:mm:ss');
+            $account->updatedAt = date('Y-m-d H:i:s');
             $account->save();
             return Response::data(null, 1, "Account successfully update.");
         } else {
