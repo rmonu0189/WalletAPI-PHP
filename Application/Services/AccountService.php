@@ -15,8 +15,9 @@ class AccountService {
     public static function addNewAccount($params, $userId) {
         $validation = new MRValidation($params, [
             'type' => 'required',
+            'bankName' => 'required',
             'balance' => 'required',
-            'info' => 'required'
+            'accountNumber' => 'required'
         ], []);
 
         if($validation->validateFailed()){
@@ -33,8 +34,8 @@ class AccountService {
         $validation = new MRValidation($params, [
             'id' => 'required',
             'type' => 'required',
-            'balance' => 'required',
-            'info' => 'required'
+            'bankName' => 'required',
+            'accountNumber' => 'required'
         ], []);
 
         if($validation->validateFailed()){
@@ -44,8 +45,8 @@ class AccountService {
         $account = Account::where('id', $params['id'])->where('userId', $userId)->first();
         if($account) {
             $account->type = $params['type'];
-            $account->balance = $params['balance'];
-            $account->info = $params['info'];
+            $account->bankName = $params['bankName'];
+            $account->accountNumber = $params['accountNumber'];
             $account->save();
             return Response::data(null, 1, "Account successfully update.");
         } else {
