@@ -16,7 +16,6 @@ class AccountService {
         $validation = new MRValidation($params, [
             'type' => 'required',
             'bankName' => 'required',
-            'balance' => 'required',
             'accountNumber' => 'required'
         ], []);
 
