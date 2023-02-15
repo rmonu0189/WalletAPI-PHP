@@ -9,7 +9,7 @@ use MRPHPSDK\MRValidation\MRValidation;
 class PersonService {
     public static function getPersons($userId) {
         $persons = Person::where('userId', $userId)->get();
-        return Response::data($persons, 1, "");
+        return Response::data($persons ? $person : [], 1, "");
     }
 
     public static function addNewPerson($params, $userId) {

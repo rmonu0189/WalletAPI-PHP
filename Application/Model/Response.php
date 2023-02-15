@@ -18,11 +18,7 @@ class Response extends MRModel{
     }
 
     public static function data($data, $status = 1, $message = "" ){
-        if($data) {
-            return ["data" => $data, "status"=>$status == 0 ? false : true, "message"=>$message];
-        } else {
-            return ["data" => ["status" => $status], "status"=>$status == 0 ? false : true, "message"=>$message];
-        }
+        return ["data" => $data, "status"=>$status == 0 ? false : true, "message"=>$message];
     }
 
     public static function toObject($message, $status=0, $data=[]) {

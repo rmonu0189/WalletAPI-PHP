@@ -9,7 +9,7 @@ use MRPHPSDK\MRValidation\MRValidation;
 class IncomeSourceService {
     public static function getIncomeSources($userId) {
         $results = IncomeSource::where('userId', $userId)->get();
-        return Response::data($results, 1, "");
+        return Response::data($results ? $results : [], 1, "");
     }
 
     public static function addNewIncomeSource($params, $userId) {

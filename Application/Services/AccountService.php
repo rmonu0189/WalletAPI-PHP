@@ -9,7 +9,7 @@ use MRPHPSDK\MRValidation\MRValidation;
 class AccountService {
     public static function getAccounts($userId) {
         $accounts = Account::where('userId', $userId)->get();
-        return Response::data($accounts, 1, "");
+        return Response::data($accounts ? $accounts : [], 1, "");
     }
 
     public static function addNewAccount($params, $userId) {

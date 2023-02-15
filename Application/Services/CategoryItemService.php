@@ -9,7 +9,7 @@ use MRPHPSDK\MRValidation\MRValidation;
 class CategoryItemService {
     public static function getCategoryItems($userId) {
         $results = CategoryItem::where('userId', $userId)->get();
-        return Response::data($results, 1, "");
+        return Response::data($results ? $results : [], 1, "");
     }
 
     public static function addNewCategoryItem($params, $userId) {
