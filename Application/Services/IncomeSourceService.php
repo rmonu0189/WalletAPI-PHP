@@ -14,8 +14,7 @@ class IncomeSourceService {
 
     public static function addNewIncomeSource($params, $userId) {
         $validation = new MRValidation($params, [
-            'name' => 'required',
-            'initialBalance' => 'required'
+            'name' => 'required'
         ], []);
 
         if($validation->validateFailed()){
@@ -23,7 +22,7 @@ class IncomeSourceService {
         }
 
         $params['userId'] = $userId;
-        $params['balance'] = $params['initialBalance'];
+        $params['balance'] = $params['initialBalance'] ?? 0;
         $model = new IncomeSource($params);
         $model->save();
         return Response::data(null, 1, "IncomeSource added successfully.");
@@ -32,8 +31,7 @@ class IncomeSourceService {
     public static function editIncomeSource($params, $userId) {
         $validation = new MRValidation($params, [
             'id' => 'required',
-            'name' => 'required',
-            'initialBalance' => 'required'
+            'name' => 'required'
         ], []);
 
         if($validation->validateFailed()){

@@ -15,8 +15,7 @@ class PersonService {
     public static function addNewPerson($params, $userId) {
         $validation = new MRValidation($params, [
             'name' => 'required',
-            'mobile' => 'required',
-            'initialBalance' => 'required'
+            'mobile' => 'required'
         ], []);
 
         if($validation->validateFailed()){
@@ -24,7 +23,7 @@ class PersonService {
         }
 
         $params['userId'] = $userId;
-        $params['balance'] = $params['initialBalance'];
+        $params['balance'] = $params['initialBalance'] ?? 0;
         $person = new Person($params);
         $person->save();
         return Response::data(null, 1, "Person added successfully.");
@@ -34,8 +33,7 @@ class PersonService {
         $validation = new MRValidation($params, [
             'id' => 'required',
             'name' => 'required',
-            'mobile' => 'required',
-            'initialBalance' => 'required'
+            'mobile' => 'required'
         ], []);
 
         if($validation->validateFailed()){
