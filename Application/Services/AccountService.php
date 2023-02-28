@@ -24,7 +24,11 @@ class AccountService {
         }
 
         $params['userId'] = $userId;
-        $params['balance'] = $params['initialBalance'];
+        if(array_key_exists("initialBalance", $params)) {
+            $params['balance'] = $params['initialBalance'];
+        } else {
+            $params['balance'] = 0.0;
+        }
         $account = new Account($params);
         $account->save();
         return Response::data(null, 1, "Account added successfully.");
