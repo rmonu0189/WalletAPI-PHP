@@ -73,8 +73,9 @@ class AuthService {
             "expireAt" => date('Y-m-d H:i:s', strtotime("+30 minutes", strtotime(date('Y-m-d H:i:s'))))
         ]);
         $otp->save();
+        $headers = "From: no-reply@digimoplus.online";
         $body = "Hi</br></br>" + $code + " is your One Time Password to change your password. Please do not share this to anyone.</br></br>Regards,</br>Wallet Management Team";
-        mail($params['email'], "WalletManagement: Recover your password.", $body);
+        mail($params['email'], "WalletManagement: Recover your password.", $body, $headers);
         return Response::data(null, 1, "OTP sent to your registered email.");
     }
 
