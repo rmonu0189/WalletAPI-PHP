@@ -10,7 +10,7 @@ class EmailService {
         // Additional headers 
         $headers .= 'From: no-reply@digimoplus.online' . "\r\n"; 
 
-        $body = otpTemplate($otp);
+        $body = EmailService::otpTemplate($otp);
         mail($email, "WalletManagement: Recover your password.", $body, $headers);
     }
 
