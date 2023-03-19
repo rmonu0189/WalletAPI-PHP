@@ -15,4 +15,8 @@ class UserController extends MRController {
 	public function getMe(MRRequest $request) {
 		return Response::json(UserService::getUserProfile($this->getAuth()->id));
 	}
+
+	public function putMe(MRRequest $request) {
+		return Response::json(UserService::updateUserProfile($this->getAuth()->id, $request->input()));
+	}
 }
