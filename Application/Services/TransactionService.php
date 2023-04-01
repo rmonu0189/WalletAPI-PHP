@@ -94,8 +94,8 @@ class TransactionService {
             $transaction = new Transaction([
                 'userId' => $userId,
                 'fromAccountId' => $params['fromAccountId'],
-                'toAccountId' => $params['toAccountId'],
-                'type' => 'accountToAccount',
+                'toAccountId' => $params['personId'],
+                'type' => 'accountToPerson',
                 'amount' => $amount,
                 'comment' => $params['comment'],
                 'date' => date($params['date'])
@@ -139,9 +139,9 @@ class TransactionService {
 
             $transaction = new Transaction([
                 'userId' => $userId,
-                'fromAccountId' => $params['fromAccountId'],
+                'fromAccountId' => $params['personId'],
                 'toAccountId' => $params['toAccountId'],
-                'type' => 'accountToAccount',
+                'type' => 'personToAccount',
                 'amount' => $amount,
                 'comment' => $params['comment'],
                 'date' => date($params['date'])
