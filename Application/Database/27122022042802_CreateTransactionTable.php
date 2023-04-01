@@ -9,7 +9,12 @@ class CreateTransactionTable extends MRMigration{
 		MRMigration::create('Transaction', function(DBSchema $schema){
             $schema->bigIncrement('id');
             $schema->bigInteger("userId");
-			$schema->string("type");
+            $schema->bigInteger("fromAccountId");
+            $schema->bigInteger("toAccountId");
+			$schema->string("type"); // accountToAccount/accountToPerson
+            $schema->double("amount");
+            $schema->string("comment");
+            $schema->dateTime("date");
             $schema->dateTime("createdAt")->defaultCurrentTimeStamp();
             $schema->dateTime("updatedAt")->defaultCurrentTimeStamp();
         });
