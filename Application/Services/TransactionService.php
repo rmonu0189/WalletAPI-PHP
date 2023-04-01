@@ -39,12 +39,12 @@ class TransactionService {
             $linkedAccount->balance = $linkedAccount->balance + $amount;
             $linkedAccount->save();
         } else {
-            $toAccount->balance = $fromAccount->balance + $amount;
+            $toAccount->balance = $toAccount->balance + $amount;
             $toAccount->save();
         }
 
         if($fromAccount && $toAccount) {
-            $date = date('Y-m-d', $params['date']);
+            $date = date($params['date']);
             $transaction = new Transaction([
                 'userId' => $userId,
                 'fromAccountId' => $params['fromAccountId'],
