@@ -15,5 +15,6 @@ Route::group([
         Route::controller("person", "PersonController");
         Route::controller("incomesource", "IncomeSourceController");
         Route::controller("category", "CategoryItemController");
+        Route::controller("transaction", "TransactionController");
     });
 });
