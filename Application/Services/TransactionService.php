@@ -25,26 +25,26 @@ class TransactionService {
         $fromAccount = Account::where('id', $params['fromAccountId'])->where('userId', $userId)->first();
         $toAccount = Account::where('id', $params['toAccountId'])->where('userId', $userId)->first();
         $amount = $params['amount'];
-        if($fromAccount->type === "debitCard") {
-            $linkedAccount = Account::where('id', $fromAccount->linkedBankId)->first();
-            $linkedAccount->balance = $linkedAccount->balance - $amount;
-            $linkedAccount->save();
-        } else {
-            $fromAccount->balance = $fromAccount->balance - $amount;
-            $fromAccount->save();
-        }
- 
-        if($toAccount->type === "debitCard") {
-            $linkedAccount = Account::where('id', $toAccount->linkedBankId)->first();
-            $linkedAccount->balance = $linkedAccount->balance + $amount;
-            $linkedAccount->save();
-        } else {
-            $toAccount->balance = $toAccount->balance + $amount;
-            $toAccount->save();
-        }
 
         if($fromAccount && $toAccount) {
-            $date = date($params['date']);
+            if($fromAccount->type === "debitCard") {
+                $linkedAccount = Account::where('id', $fromAccount->linkedBankId)->first();
+                $linkedAccount->balance = $linkedAccount->balance - $amount;
+                $linkedAccount->save();
+            } else {
+                $fromAccount->balance = $fromAccount->balance - $amount;
+                $fromAccount->save();
+            }
+     
+            if($toAccount->type === "debitCard") {
+                $linkedAccount = Account::where('id', $toAccount->linkedBankId)->first();
+                $linkedAccount->balance = $linkedAccount->balance + $amount;
+                $linkedAccount->save();
+            } else {
+                $toAccount->balance = $toAccount->balance + $amount;
+                $toAccount->save();
+            }
+
             $transaction = new Transaction([
                 'userId' => $userId,
                 'fromAccountId' => $params['fromAccountId'],
@@ -52,7 +52,7 @@ class TransactionService {
                 'type' => 'accountToAccount',
                 'amount' => $amount,
                 'comment' => $params['comment'],
-                'date' => $date
+                'date' => date($params['date'])
             ]);
             $transaction->save();
             return Response::data(null, 1, "Transaction successfully added.");
@@ -61,25 +61,95 @@ class TransactionService {
         }
     }
 
-    public static function getPersons($userId) {
-        $persons = Person::where('userId', $userId)->get();
-        return Response::data($persons, 1, "");
-    }
-
-    public static function addNewPerson($params, $userId) {
+    public static function addAccountToPersonTransaction($userId, $params) {
         $validation = new MRValidation($params, [
-            'name' => 'required',
-            'balance' => 'required',
-            'initialBalance' => 'required'
+            'fromAccountId' => 'required',
+            'personId' => 'required',
+            'amount' => 'required',
+            'date' => 'required',
+            'comment' => 'required'
         ], []);
 
         if($validation->validateFailed()){
             return Response::data([], 0, $validation->getValidationError()[0]);
         }
 
-        $params['userId'] = $userId;
-        $person = new Person($params);
-        $person->save();
-        return Response::data(null, 1, "Person added successfully.");
+        $fromAccount = Account::where('id', $params['fromAccountId'])->where('userId', $userId)->first();
+        $Person = Person::where('id', $params['personId'])->where('userId', $userId)->first();
+        $amount = $params['amount'];
+
+        if($fromAccount && $Person) {
+            if($fromAccount->type === "debitCard") {
+                $linkedAccount = Account::where('id', $fromAccount->linkedBankId)->first();
+                $linkedAccount->balance = $linkedAccount->balance - $amount;
+                $linkedAccount->save();
+            } else {
+                $fromAccount->balance = $fromAccount->balance - $amount;
+                $fromAccount->save();
+            }
+    
+            $Person->balance = $Person->balance + $amount;
+            $Person->save();
+
+            $transaction = new Transaction([
+                'userId' => $userId,
+                'fromAccountId' => $params['fromAccountId'],
+                'toAccountId' => $params['toAccountId'],
+                'type' => 'accountToAccount',
+                'amount' => $amount,
+                'comment' => $params['comment'],
+                'date' => date($params['date'])
+            ]);
+            $transaction->save();
+            return Response::data(null, 1, "Transaction successfully added.");
+        } else {
+            return Response::data(null, 0, "Invalid from or to account information.");
+        }
+    }
+
+    public static function addPersonToAccountTransaction($userId, $params) {
+        $validation = new MRValidation($params, [
+            'toAccountId' => 'required',
+            'personId' => 'required',
+            'amount' => 'required',
+            'date' => 'required',
+            'comment' => 'required'
+        ], []);
+
+        if($validation->validateFailed()){
+            return Response::data([], 0, $validation->getValidationError()[0]);
+        }
+
+        $toAccount = Account::where('id', $params['toAccountId'])->where('userId', $userId)->first();
+        $Person = Person::where('id', $params['personId'])->where('userId', $userId)->first();
+        $amount = $params['amount'];
+
+        if($toAccount && $Person) {
+            if($toAccount->type === "debitCard") {
+                $linkedAccount = Account::where('id', $toAccount->linkedBankId)->first();
+                $linkedAccount->balance = $linkedAccount->balance + $amount;
+                $linkedAccount->save();
+            } else {
+                $toAccount->balance = $toAccount->balance + $amount;
+                $toAccount->save();
+            }
+    
+            $Person->balance = $Person->balance - $amount;
+            $Person->save();
+
+            $transaction = new Transaction([
+                'userId' => $userId,
+                'fromAccountId' => $params['fromAccountId'],
+                'toAccountId' => $params['toAccountId'],
+                'type' => 'accountToAccount',
+                'amount' => $amount,
+                'comment' => $params['comment'],
+                'date' => date($params['date'])
+            ]);
+            $transaction->save();
+            return Response::data(null, 1, "Transaction successfully added.");
+        } else {
+            return Response::data(null, 0, "Invalid from or to account information.");
+        }
     }
 }
