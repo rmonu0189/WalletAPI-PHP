@@ -7,6 +7,7 @@ use Application\Model\Response;
 use MRPHPSDK\MRValidation\MRValidation;
 use Application\Model\Account;
 use Application\Model\Transaction;
+use Application\Model\IncomeSource;
 
 class TransactionService {
     public static function addAccountToAccountTransaction($userId, $params) {
@@ -142,6 +143,52 @@ class TransactionService {
                 'fromAccountId' => $params['personId'],
                 'toAccountId' => $params['toAccountId'],
                 'type' => 'personToAccount',
+                'amount' => $amount,
+                'comment' => $params['comment'],
+                'date' => date($params['date'])
+            ]);
+            $transaction->save();
+            return Response::data(null, 1, "Transaction successfully added.");
+        } else {
+            return Response::data(null, 0, "Invalid from or to account information.");
+        }
+    }
+
+    public static function adIncome($userId, $params) {
+        $validation = new MRValidation($params, [
+            'toAccountId' => 'required',
+            'incomeSourceId' => 'required',
+            'amount' => 'required',
+            'date' => 'required',
+            'comment' => 'required'
+        ], []);
+
+        if($validation->validateFailed()){
+            return Response::data([], 0, $validation->getValidationError()[0]);
+        }
+
+        $toAccount = Account::where('id', $params['toAccountId'])->where('userId', $userId)->first();
+        $incomeSource = IncomeSource::where('id', $params['incomeSourceId'])->where('userId', $userId)->first();
+        $amount = $params['amount'];
+
+        if($toAccount && $incomeSource) {
+            if($toAccount->type === "debitCard") {
+                $linkedAccount = Account::where('id', $toAccount->linkedBankId)->first();
+                $linkedAccount->balance = $linkedAccount->balance + $amount;
+                $linkedAccount->save();
+            } else {
+                $toAccount->balance = $toAccount->balance + $amount;
+                $toAccount->save();
+            }
+    
+            $incomeSource->balance = $incomeSource->balance - $amount;
+            $incomeSource->save();
+
+            $transaction = new Transaction([
+                'userId' => $userId,
+                'fromAccountId' => $params['incomeSourceId'],
+                'toAccountId' => $params['toAccountId'],
+                'type' => 'incomeSourceToAccount',
                 'amount' => $amount,
                 'comment' => $params['comment'],
                 'date' => date($params['date'])
