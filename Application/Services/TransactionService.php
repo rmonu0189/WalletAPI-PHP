@@ -15,8 +15,7 @@ class TransactionService {
             'fromAccountId' => 'required',
             'toAccountId' => 'required',
             'amount' => 'required',
-            'date' => 'required',
-            'comment' => 'required'
+            'date' => 'required'
         ], []);
 
         if($validation->validateFailed()){
@@ -67,8 +66,7 @@ class TransactionService {
             'fromAccountId' => 'required',
             'personId' => 'required',
             'amount' => 'required',
-            'date' => 'required',
-            'comment' => 'required'
+            'date' => 'required'
         ], []);
 
         if($validation->validateFailed()){
@@ -113,8 +111,7 @@ class TransactionService {
             'toAccountId' => 'required',
             'personId' => 'required',
             'amount' => 'required',
-            'date' => 'required',
-            'comment' => 'required'
+            'date' => 'required'
         ], []);
 
         if($validation->validateFailed()){
@@ -159,8 +156,7 @@ class TransactionService {
             'toAccountId' => 'required',
             'incomeSourceId' => 'required',
             'amount' => 'required',
-            'date' => 'required',
-            'comment' => 'required'
+            'date' => 'required'
         ], []);
 
         if($validation->validateFailed()){
