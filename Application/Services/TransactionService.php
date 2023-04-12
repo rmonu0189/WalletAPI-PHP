@@ -12,7 +12,7 @@ use Application\Model\IncomeSource;
 class TransactionService {
     public static function getTransactions($userId, $filter) {
         $query = Transaction::where('userId', $userId);
-        if($filter['fromDate'] && $filter['toDate']) {
+        if(isset($filter['fromDate']) && isset($filter['toDate'])) {
             $query = $query->where('date', $filter['fromDate'], '>=')->where('date', $filter['toDate'], '<=');
         }
         $transactions = $query->orderBy('id', 'DESC')->get();
