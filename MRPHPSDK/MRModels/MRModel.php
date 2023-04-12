@@ -127,13 +127,13 @@ class MRModel{
         return $inst;
     }
 
-    public static function where($key, $value){
+    public static function where($key, $value, $operator = '='){
         static $inst = null;
         if ($inst === null) {
             $class = get_called_class();
             $inst = new $class();
         }
-        $inst->where .= (($inst->where=="")?"":" AND ").$key."='".$value."'";
+        $inst->where .= (($inst->where=="")?"":" AND ").$key.$operator."'".$value."'";
         return $inst;
     }
 
