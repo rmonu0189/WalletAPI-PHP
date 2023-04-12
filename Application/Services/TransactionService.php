@@ -11,12 +11,11 @@ use Application\Model\IncomeSource;
 
 class TransactionService {
     public static function getTransactions($userId, $filter) {
-        $transactions = [];
+        $query = Transaction::where('userId', $userId);
         if($filter['fromDate'] && $filter['toDate']) {
-            $transactions = Transaction::where('userId', $userId)->where('date', $filter['fromDate'], '>=')->where('date', $filter['toDate'], '<=')->orderBy('id', 'DESC')->get();
-        } else {
-            $transactions = Transaction::where('userId', $userId)->orderBy('id', 'DESC')->get();
+            $query = $query->where('date', $filter['fromDate'], '>=')->where('date', $filter['toDate'], '<=');
         }
+        $transactions = $query->orderBy('id', 'DESC')->get();
         return Response::data($transactions, 1, "");
     }
 
