@@ -10,6 +10,11 @@ use Application\Model\Transaction;
 use Application\Model\IncomeSource;
 
 class TransactionService {
+    public static function getTransactions($userId, $filter) {
+        $transactions = Transaction::where('userId', $userId)->get();
+        return Response::data($transactions, 1, "");
+    }
+
     public static function addAccountToAccountTransaction($userId, $params) {
         $validation = new MRValidation($params, [
             'fromAccountId' => 'required',
