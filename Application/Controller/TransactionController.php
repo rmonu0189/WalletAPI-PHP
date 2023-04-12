@@ -12,6 +12,11 @@ class TransactionController extends MRController{
 		parent::__construct();
 	}
 
+	public function getIndex(MRRequest $request) {
+		$result = TransactionService::getTransactions($this->getAuth()->id, $request->input());
+        return Response::json($result);
+	}
+
 	public function postAddAccountToAccountTransfer(MRRequest $request) {
 		$result = TransactionService::addAccountToAccountTransaction($this->getAuth()->id, $request->input());
         return Response::json($result);
@@ -29,11 +34,6 @@ class TransactionController extends MRController{
 
 	public function postAddIncome(MRRequest $request) {
 		$result = TransactionService::adIncome($this->getAuth()->id, $request->input());
-        return Response::json($result);
-	}
-
-	public function getTransactions(MRRequest $request) {
-		$result = TransactionService::getTransactions($this->getAuth()->id, $request->input());
         return Response::json($result);
 	}
 }
