@@ -66,7 +66,7 @@ class TransactionService {
             $transaction->save();
 
             $model = Transaction::where('id', $transaction->id)->first();
-            return Response::data($model, 1, "Transaction successfully added.");
+            return Response::data(['transaction' => $model, 'fromAccount' => $fromAccount, 'toAccount' => $toAccount], 1, "Transaction successfully added.");
         } else {
             return Response::data(null, 0, "Invalid from or to account information.");
         }
@@ -113,7 +113,7 @@ class TransactionService {
             $transaction->save();
 
             $model = Transaction::where('id', $transaction->id)->first();
-            return Response::data($model, 1, "Transaction successfully added.");
+            return Response::data(['transaction' => $model, 'fromAccount' => $fromAccount, 'person' => $Person], 1, "Transaction successfully added.");
         } else {
             return Response::data(null, 0, "Invalid from or to account information.");
         }
@@ -160,7 +160,7 @@ class TransactionService {
             $transaction->save();
             
             $model = Transaction::where('id', $transaction->id)->first();
-            return Response::data($model, 1, "Transaction successfully added.");
+            return Response::data(['transaction' => $model, 'person' => $Person, 'toAccount' => $toAccount], 1, "Transaction successfully added.");
         } else {
             return Response::data(null, 0, "Invalid from or to account information.");
         }
@@ -207,7 +207,7 @@ class TransactionService {
             $transaction->save();
             
             $model = Transaction::where('id', $transaction->id)->first();
-            return Response::data($model, 1, "Transaction successfully added.");
+            return Response::data(['transaction' => $model, 'income' => $incomeSource, 'toAccount' => $toAccount], 1, "Transaction successfully added.");
         } else {
             return Response::data(null, 0, "Invalid from or to account information.");
         }
