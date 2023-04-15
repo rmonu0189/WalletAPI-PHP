@@ -31,7 +31,7 @@ class AccountService {
         }
         $account = new Account($params);
         $account->save();
-        return Response::data(null, 1, "Account added successfully.");
+        return Response::data($account, 1, "Account added successfully.");
     }
 
     public static function editAccount($params, $userId) {
@@ -55,7 +55,7 @@ class AccountService {
             $account->initialBalance = $params['initialBalance'];
             $account->updatedAt = date('Y-m-d H:i:s');
             $account->save();
-            return Response::data(null, 1, "Account successfully update.");
+            return Response::data($account, 1, "Account successfully update.");
         } else {
             return Response::data(null, 0, "Account not found.");
         }

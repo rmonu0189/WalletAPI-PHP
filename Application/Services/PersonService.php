@@ -26,7 +26,7 @@ class PersonService {
         $params['balance'] = $params['initialBalance'] ?? 0;
         $person = new Person($params);
         $person->save();
-        return Response::data(null, 1, "Person added successfully.");
+        return Response::data($person, 1, "Person added successfully.");
     }
 
     public static function editPerson($params, $userId) {
@@ -47,7 +47,7 @@ class PersonService {
             $person->initialBalance = $params['initialBalance'];
             $person->updatedAt = date('Y-m-d H:i:s');
             $person->save();
-            return Response::data(null, 1, "Person successfully update.");
+            return Response::data($person, 1, "Person successfully update.");
         } else {
             return Response::data(null, 0, "Person not found.");
         }
