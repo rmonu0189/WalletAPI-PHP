@@ -64,7 +64,9 @@ class TransactionService {
                 'date' => date($params['date'])
             ]);
             $transaction->save();
-            return Response::data(null, 1, "Transaction successfully added.");
+
+            $model = Transaction::where('id', $transaction->id)->first();
+            return Response::data($model, 1, "Transaction successfully added.");
         } else {
             return Response::data(null, 0, "Invalid from or to account information.");
         }
@@ -109,7 +111,9 @@ class TransactionService {
                 'date' => date($params['date'])
             ]);
             $transaction->save();
-            return Response::data(null, 1, "Transaction successfully added.");
+
+            $model = Transaction::where('id', $transaction->id)->first();
+            return Response::data($model, 1, "Transaction successfully added.");
         } else {
             return Response::data(null, 0, "Invalid from or to account information.");
         }
@@ -154,7 +158,9 @@ class TransactionService {
                 'date' => date($params['date'])
             ]);
             $transaction->save();
-            return Response::data(null, 1, "Transaction successfully added.");
+            
+            $model = Transaction::where('id', $transaction->id)->first();
+            return Response::data($model, 1, "Transaction successfully added.");
         } else {
             return Response::data(null, 0, "Invalid from or to account information.");
         }
@@ -199,7 +205,9 @@ class TransactionService {
                 'date' => date($params['date'])
             ]);
             $transaction->save();
-            return Response::data(null, 1, "Transaction successfully added.");
+            
+            $model = Transaction::where('id', $transaction->id)->first();
+            return Response::data($model, 1, "Transaction successfully added.");
         } else {
             return Response::data(null, 0, "Invalid from or to account information.");
         }
