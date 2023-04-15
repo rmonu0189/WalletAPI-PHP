@@ -26,7 +26,9 @@ class PersonService {
         $params['balance'] = $params['initialBalance'] ?? 0;
         $person = new Person($params);
         $person->save();
-        return Response::data($person, 1, "Person added successfully.");
+
+        $newPerson = Person::where('id', $person->id)->first();
+        return Response::data($newPerson, 1, "Person added successfully.");
     }
 
     public static function editPerson($params, $userId) {
