@@ -25,7 +25,9 @@ class IncomeSourceService {
         $params['balance'] = $params['initialBalance'] ?? 0;
         $model = new IncomeSource($params);
         $model->save();
-        return Response::data(null, 1, "IncomeSource added successfully.");
+
+        $newRecord = IncomeSource::where('id', $model->id)->first();
+        return Response::data($newRecord, 1, "IncomeSource added successfully.");
     }
 
     public static function editIncomeSource($params, $userId) {
@@ -44,7 +46,7 @@ class IncomeSourceService {
             $model->initialBalance = $params['initialBalance'];
             $model->updatedAt = date('Y-m-d H:i:s');
             $model->save();
-            return Response::data(null, 1, "IncomeSource successfully update.");
+            return Response::data($model, 1, "IncomeSource successfully update.");
         } else {
             return Response::data(null, 0, "IncomeSource not found.");
         }

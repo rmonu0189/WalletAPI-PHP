@@ -25,7 +25,9 @@ class CategoryItemService {
         $params['userId'] = $userId;
         $model = new CategoryItem($params);
         $model->save();
-        return Response::data(null, 1, "CategoryItem added successfully.");
+
+        $newRecord = CategoryItem::where('id', $model->id)->first();
+        return Response::data($newRecord, 1, "CategoryItem added successfully.");
     }
 
     public static function editCategoryItem($params, $userId) {
@@ -44,7 +46,7 @@ class CategoryItemService {
             $model->name = $params['name'];
             $model->icon = $params['icon'];
             $model->save();
-            return Response::data(null, 1, "CategoryItem successfully update.");
+            return Response::data($model, 1, "CategoryItem successfully update.");
         } else {
             return Response::data(null, 0, "CategoryItem not found.");
         }
