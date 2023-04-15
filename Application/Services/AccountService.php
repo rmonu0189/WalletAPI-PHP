@@ -31,7 +31,9 @@ class AccountService {
         }
         $account = new Account($params);
         $account->save();
-        return Response::data($account, 1, "Account added successfully.");
+
+        $newAccount = Account::where('id', $account->id)->first();
+        return Response::data($newAccount, 1, "Account added successfully.");
     }
 
     public static function editAccount($params, $userId) {
