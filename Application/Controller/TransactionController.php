@@ -36,4 +36,9 @@ class TransactionController extends MRController{
 		$result = TransactionService::adIncome($this->getAuth()->id, $request->input());
         return Response::json($result);
 	}
+
+	public function postAddExpenses(MRRequest $request) {
+		$result = TransactionService::adExpenses($this->getAuth()->id, $request->input());
+        return Response::json($result);
+	}
 }
