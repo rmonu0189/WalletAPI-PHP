@@ -248,7 +248,7 @@ class TransactionService {
 
             $transaction = new Transaction([
                 'userId' => $userId,
-                'fromAccountId' => $params['incomeSourceId'],
+                'fromAccountId' => $params['fromAccountId'],
                 'toAccountId' => $params['categoryId'],
                 'type' => 'expenses',
                 'amount' => $amount,
